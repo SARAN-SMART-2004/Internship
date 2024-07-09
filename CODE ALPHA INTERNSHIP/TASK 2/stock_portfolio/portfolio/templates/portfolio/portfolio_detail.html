@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #333; /* Dark background color */
+        color: #fff; /* Light text color */
+    }
+
+    .portfolio-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff; /* Blue button color */
+        color: #fff; /* White text color */
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .stock-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .stock-item {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #444; /* Darker background for each stock item */
+        border-radius: 4px;
+    }
+
+    .stock-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .stock-symbol {
+        font-weight: bold;
+    }
+
+    .stock-quantity,
+    .stock-price,
+    .profit-loss {
+        font-size: 14px;
+    }
+</style>
+
+<div class="container">
+    <div class="portfolio-header">
+        <h2>{{ portfolio.name }}</h2>
+        <a href="{% url 'add_stock' portfolio.pk %}" class="btn btn-primary">Add Stock</a>
+    </div>
+    
+    <ul class="stock-list">
+        {% for stock in stocks %}
+        <li class="stock-item">
+            <div class="stock-info">
+                <span class="stock-symbol">{{ stock.symbol }}</span>
+                <span class="stock-quantity">Quantity: {{ stock.quantity }}</span>
+                <span class="stock-price">Price: ${{ stock.current_price }}</span>
+                <span class="profit-loss">Profit/Loss: {{ stock.profit_loss }}</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+

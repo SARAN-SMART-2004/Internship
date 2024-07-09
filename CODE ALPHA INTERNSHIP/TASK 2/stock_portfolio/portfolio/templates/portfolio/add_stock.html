@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Dark theme styles */
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.stock-form {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #444444;
+    border: 1px solid #666666;
+    color: #ffffff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+</style>
+<div class="container">
+    <h2>Add Stock</h2>
+    <form method="post" class="stock-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.symbol.id_for_label }}">Symbol:</label>
+            {{ form.symbol }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+            {{ form.quantity }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.purchase_price.id_for_label }}">Purchase price:</label>
+            {{ form.purchase_price }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('addStockForm');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                window.location.href = response.url;
+            } else {
+                const errorData = await response.json();
+                const errors = JSON.parse(errorData.errors);
+                for (const field in errors) {
+                    const errorMessage = errors[field].join('<br>');
+                    alert(`Error in ${field}: ${errorMessage}`);
+                }
+            }
+        });
+    });
+    </script>
+</div>
+{% endblock %}

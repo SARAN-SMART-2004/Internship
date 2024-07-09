@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Global styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1a1a1a; /* Dark background color */
+        color: #ffffff; /* Light text color */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    header {
+        background-color: #333333; /* Darker header background color */
+        padding: 10px;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #ffffff; /* Light header text color */
+    }
+    nav {
+        margin-top: 10px;
+    }
+    nav a {
+        color: #ffffff; /* Light link text color */
+        text-decoration: none;
+        padding: 10px;
+        transition: color 0.3s;
+    }
+    nav a:hover {
+        color: #66ccff; /* Light link text color on hover */
+    }
+    main {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+
+    /* Container and Glassmorphism styles */
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%; /* Full height */
+        width: 100%;
+    }
+
+    .glassmorphism-box {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        width: 700px; /* Adjust the width as needed */
+        text-align: justify;
+    }
+
+    .glassmorphism-box h2 {
+        margin-bottom: 20px;
+    }
+
+    .glassmorphism-box form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .glassmorphism-box button {
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background-color: #66ccff; /* Button background color */
+        color: #fff; /* Button text color */
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .glassmorphism-box button:hover {
+        background-color: #3399cc; /* Button background color on hover */
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 600px) {
+        nav {
+            display: block;
+            text-align: center;
+        }
+        nav a {
+            display: block;
+            padding: 8px 0;
+        }
+    }
+</style>
+<div class="container">
+    <div class="glassmorphism-box">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

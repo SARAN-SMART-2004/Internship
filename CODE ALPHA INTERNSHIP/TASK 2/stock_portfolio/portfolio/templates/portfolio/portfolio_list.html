@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>/* styles.css */
+
+    /* Custom styles for responsive and dark theme */
+    .container {
+        margin-top: 20px;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    .text-white {
+        color: #ffffff; /* White text color */
+    }
+    
+    .list-group-item {
+        border-color: rgba(255, 255, 255, 0.125); /* Lighter border color */
+    }
+    
+    .list-group-item-dark {
+        
+        border-color: #343a40; /* Dark border color */
+    }
+    
+    .list-group-item-dark a {
+        color: #ffffff; /* White link color */
+    }
+    
+    .list-group-item-dark a:hover {
+        color: #cccccc; /* Light grey link color on hover */
+    }
+    
+    @media (max-width: 768px) {
+        .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+    </style>
+<div class="container">
+    <h2 class="text-center text-white">Your Portfolios</h2>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <ul class="list-group">
+                {% for portfolio in portfolios %}
+                <li class="list-group-item list-group-item-dark">
+                    <a href="{% url 'portfolio_detail' portfolio.pk %}" class="text-decoration-none text-light">{{ portfolio.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

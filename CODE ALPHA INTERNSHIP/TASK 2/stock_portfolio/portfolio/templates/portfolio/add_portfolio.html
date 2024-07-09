@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Custom styles for the form */
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #292b2c; /* Dark background color */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+    color: white; /* Text color for labels and inputs */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.btn {
+    background-color: #007bff; /* Blue primary button color */
+    border-color: #007bff;
+    color: white;
+}
+
+.btn:hover,
+.btn:focus {
+    background-color: #0056b3; /* Darker blue on hover/focus */
+    border-color: #0056b3;
+    color: white;
+}
+
+</style>
+<div class="container">
+    <h2 style="color: white;">Add Portfolio</h2>
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}" style="color: white;">Portfolio Name:</label>
+            {{ form.name }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+{% endblock %}
