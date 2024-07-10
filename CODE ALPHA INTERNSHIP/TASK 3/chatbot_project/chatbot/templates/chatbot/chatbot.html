@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #121212; /* Dark background */
+            font-family: Arial, sans-serif;
+            color: #e0e0e0; /* Light text color */
+        }
+        #chat-window {
+            width: 400px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        #chat-output {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #ffffff; /* Text color for chat output */
+        }
+        #user-input {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #6200ea;
+            background-color: #333333; /* Darker input background */
+            color: #e0e0e0; /* Light text color for input */
+            margin-right: 10px;
+            outline: none;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #6200ea;
+            color: white;
+            cursor: pointer;
+            outline: none;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-window">
+        <h1 style="text-align: center;">Chat with our Bot</h1>
+        <div id="chat-output"></div>
+        <div style="display: flex;">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/chatbot/", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    const chatOutput = document.getElementById('chat-output');
+                    chatOutput.innerHTML += `<p><strong>User:</strong> ${userInput}</p>`;
+                    chatOutput.innerHTML += `<p><strong>Bot:</strong> ${response.response}</p>`;
+                    document.getElementById('user-input').value = '';
+                }
+            };
+            xhr.send(`message=${userInput}`);
+        }
+    </script>
+</body>
+</html>
